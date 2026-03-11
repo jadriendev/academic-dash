@@ -2,24 +2,26 @@ const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
 const closeSidebar = document.getElementById("closeSidebar");
 
-// Open sidebar
-menuBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("-translate-x-full");
-  document.body.classList.toggle("overflow-hidden"); // lock body scroll
-});
+function openSidebar() {
+  sidebar.classList.remove("-translate-x-full");
+  document.body.style.position = "fixed";
+  document.body.style.width = "100%";
+}
 
-// Close sidebar
-closeSidebar.addEventListener("click", () => {
+function closeSidebarFunc() {
   sidebar.classList.add("-translate-x-full");
-  document.body.classList.remove("overflow-hidden"); // unlock body scroll
-});
+  document.body.style.position = "";
+  document.body.style.width = "";
+}
 
-// Optional: click outside to close
+menuBtn.addEventListener("click", openSidebar);
+
+closeSidebar.addEventListener("click", closeSidebarFunc);
+
 window.addEventListener("click", (e) => {
-  if (window.innerWidth < 1024) { // mobile only
+  if (window.innerWidth < 1024) {
     if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-      sidebar.classList.add("-translate-x-full");
-      document.body.classList.remove("overflow-hidden"); // unlock body scroll
+      closeSidebarFunc();
     }
   }
 });
